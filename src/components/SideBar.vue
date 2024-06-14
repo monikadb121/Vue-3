@@ -137,6 +137,16 @@
           ><li>Lifecycle Examples</li></router-link
         >
       </ol>
+      <router-link to="/template-refs"><li>Template Ref</li></router-link>
+      <li @click="openCompositionAPISubMenu">
+        Composition API
+        <font-awesome-icon icon="fa-solid fa-chevron-down" class="down-arrow" />
+      </li>
+      <ol v-if="compositionAPI">
+        <router-link to="/ref"><li>Ref Function</li></router-link>
+        <router-link to="/reactive"><li>Reactive function</li></router-link>
+        <router-link to="/#"><li>To be continued...</li></router-link>
+      </ol>
       <router-link to="/miscellaneous"><li>Miscellaneous</li></router-link>
     </ul>
   </div>
@@ -155,6 +165,7 @@ export default {
       dynamicComponents: false,
       vueAndHttp: false,
       lifecycle: false,
+      compositionAPI: false,
     };
   },
   methods: {
@@ -187,6 +198,9 @@ export default {
     },
     openLifecycleSubMenu() {
       this.lifecycle = !this.lifecycle;
+    },
+    openCompositionAPISubMenu() {
+      this.compositionAPI = !this.compositionAPI;
     },
   },
 };

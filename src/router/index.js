@@ -37,6 +37,9 @@ import PostList from "../views/VueAndHTTP/PostList.vue";
 import CreatePost from "../views/VueAndHTTP/CreatePost.vue";
 import LifeCycleMethods from "../views/LifeCycleMethods/LifeCycleMethods.vue";
 import LifeCycleExample from "../views/LifeCycleMethods/LifeCycleExamples/ParentComponent.vue";
+import TemplateRef from "../views/TemplateRef.vue";
+import Ref from "../views/CompositionAPI/RefFunction.vue";
+import Reactive from "../views/CompositionAPI/ReactiveFunction.vue";
 
 const routes = [
   {
@@ -194,6 +197,18 @@ const routes = [
   {
     path: "/lifecycle/examples",
     component: LifeCycleExample,
+  },
+  {
+    path: "/template-refs",
+    component: TemplateRef,
+  },
+  {
+    path: "/ref",
+    component: Ref,
+  },
+  {
+    path: "/reactive",
+    component: Reactive,
   },
   { path: "/:pathMatch(.*)*", component: HomeComponent },
 ];
