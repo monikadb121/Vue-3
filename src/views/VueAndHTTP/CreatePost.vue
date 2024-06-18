@@ -41,12 +41,22 @@
         />
       </div>
     </div>
-    <styled-button btnTitle="Save">Save</styled-button>
+    <!-- Programmatic navigation -->
+    <styled-button
+      btnTitle="Save"
+      @click="formData ? router.push('/get-request') : null"
+    ></styled-button>
+    <!-- Named programmtic navigation -->
+    <styled-button
+      btnTitle="Home"
+      @click="router.push({ name: 'home' })"
+    ></styled-button>
   </form>
 </template>
 <script>
 import axios from "axios";
 import StyledButton from "../../components/StyledButton.vue";
+import { useRouter } from "vue-router";
 export default {
   components: { StyledButton },
   data() {
@@ -57,6 +67,7 @@ export default {
         userId: "",
         status: "",
       },
+      router: useRouter(),
     };
   },
   methods: {

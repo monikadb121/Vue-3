@@ -1,7 +1,8 @@
 <template>
   <div class="main-container">
     <h2 :style="{ 'text-align': 'center' }">
-      <router-link to="/">Vue 3</router-link>
+      <!-- This is the benifit of named component, now no effect of route will be caused  here. we can change the route path and dont have to look here -->
+      <router-link :to="{ name: 'home' }">Vue 3</router-link>
     </h2>
     <ul>
       <li @click="openTextBindingSubMenu">
@@ -132,7 +133,12 @@
         <font-awesome-icon icon="fa-solid fa-chevron-down" class="down-arrow" />
       </li>
       <ol v-if="lifecycle">
-        <router-link to="/lifecycle"><li>Lifecycle Methods</li></router-link>
+        <!-- Access different params of * path -->
+        <router-link
+          :to="{ name: 'lifecycle', params: { life: ['abc', '123', '3434'] } }"
+          ><li>Lifecycle Methods</li></router-link
+        >
+
         <router-link to="/lifecycle/examples"
           ><li>Lifecycle Examples</li></router-link
         >
@@ -147,6 +153,7 @@
         <router-link to="/reactive"><li>Reactive function</li></router-link>
         <router-link to="/#"><li>To be continued...</li></router-link>
       </ol>
+      <router-link to="/users"><li>Nested Routes</li></router-link>
       <router-link to="/miscellaneous"><li>Miscellaneous</li></router-link>
     </ul>
   </div>
@@ -241,6 +248,10 @@ li:hover {
 a {
   text-decoration: none;
   color: black;
+}
+a.router-link-exact-active {
+  text-decoration: underline;
+  font-weight: 700;
 }
 a:visited {
   color: black;

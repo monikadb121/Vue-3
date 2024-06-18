@@ -9,7 +9,14 @@
       <th>Status</th>
     </tr>
     <tr v-for="post in posts" :key="post.id">
-      <td>{{ post.id }}</td>
+      <td>
+        <!-- General route -->
+        <!-- <router-link :to="`/post/${post.id}`">{{ post.id }}</router-link> -->
+        <!-- Named route -->
+        <router-link :to="{ name: 'getPost', params: { id: `${post.id}` } }">{{
+          post.id
+        }}</router-link>
+      </td>
       <td>{{ post.title }}</td>
       <td>{{ post.slug }}</td>
       <td>{{ post.userId }}</td>
@@ -55,6 +62,5 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
-  
 }
 </style>

@@ -4,6 +4,8 @@
       <side-bar />
     </div>
     <div class="content-wrapper">
+      <!-- To render multiple components within same view, use named view -->
+      <router-view name="header"></router-view>
       <router-view></router-view>
     </div>
   </div>

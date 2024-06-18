@@ -34,17 +34,33 @@ import DynamicComponents from "../views/DynamicComponents/DynamicComponents.vue"
 import KeepAlive from "../views/DynamicComponents/KeepAlive.vue";
 import Teleport from "../views/Teleport.vue";
 import PostList from "../views/VueAndHTTP/PostList.vue";
+import GetPost from "../views/VueAndHTTP/GetPost.vue";
 import CreatePost from "../views/VueAndHTTP/CreatePost.vue";
 import LifeCycleMethods from "../views/LifeCycleMethods/LifeCycleMethods.vue";
 import LifeCycleExample from "../views/LifeCycleMethods/LifeCycleExamples/ParentComponent.vue";
 import TemplateRef from "../views/TemplateRef.vue";
 import Ref from "../views/CompositionAPI/RefFunction.vue";
 import Reactive from "../views/CompositionAPI/ReactiveFunction.vue";
+import NotFound from "../views/NotFound.vue";
+import HomeHeader from "../components/HomeHeader.vue";
+import NestedRoutes from "../views/NestedRoutes/UsersComponent.vue";
+import UsersProfile from "../views/NestedRoutes/UsersChild/UsersProfile.vue";
+import UsersHeader from "../components/UsersHeader.vue";
+import UsersPosts from "../views/NestedRoutes/UsersChild/UsersPosts.vue";
 
 const routes = [
   {
     path: "/",
-    component: HomeComponent,
+    name: "home", // called as named component.
+    // Multiple components
+    components: { default: HomeComponent, header: HomeHeader },
+    // alias: "/homepage", // The component will be visible for /homepage as well
+    alias: ["/homepage", "/home-component"], //Multiple Alias
+  },
+  // Redirect path to /
+  {
+    path: "/home",
+    redirect: "/", // This will replace the /home path to / and will show home component
   },
   {
     path: "/text-binding/mustache",
@@ -186,13 +202,31 @@ const routes = [
     path: "/get-request",
     component: PostList,
   },
+  // Dynamic route
+  // Named route
+  // Route matching concept:: (\\d+)-- Regex is used to specify the type number for id
+  // + sign after (\\d+) indicates the url can have any number of params after id (Minimum one parameter is required), that will still count as a valid path
   {
-    path: "/post-request",
+    path: "/post/:id(\\d+)+",
+    name: "getPost",
+    component: GetPost,
+  },
+  // ([a-z]+$) specifies postName should always be a string
+  // Optional parameters :: postName is optional here, using ? /post-request is also accessible and /post-request/postName is also accessible
+  // ([a-z]+$) is different concept and ? is itself a different concept.
+
+  {
+    path: "/post-request/:postName([a-z]+$)?",
     component: CreatePost,
   },
+  // The *(asterick) here represents any number of params can be passed and the path will still be accessible, ex. /lifecycle is accessible, /lifecycle/one is accessible /lifecycle/one/two will be accessible and so on.
+  // diff between * and ? is that, with ? we can access the mentioned path with or without defined params, and with * we can access path with or without defined params as well as undefined params
   {
-    path: "/lifecycle",
+    path: "/lifecycle/:life*",
+    name: "lifecycle",
     component: LifeCycleMethods,
+    // By default, routing with vue router is not case sensitive. /Lifecycle works same as /lifecycle and /LIFECYCLE. To MAke it sensitive as per defined path, use sesitive true
+    sesitive: true,
   },
   {
     path: "/lifecycle/examples",
@@ -210,7 +244,23 @@ const routes = [
     path: "/reactive",
     component: Reactive,
   },
-  { path: "/:pathMatch(.*)*", component: HomeComponent },
+  // Nested Routes
+  {
+    path: "/users",
+    components: { default: NestedRoutes, header: UsersHeader },
+    children: [
+      {
+        path: ":id/profile",
+        component: UsersProfile,
+      },
+      {
+        path: "posts",
+        component: UsersPosts,
+      },
+    ],
+  },
+
+  { path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
 const router = createRouter({
