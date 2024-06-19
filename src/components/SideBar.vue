@@ -154,6 +154,16 @@
         <router-link to="/#"><li>To be continued...</li></router-link>
       </ol>
       <router-link to="/users"><li>Nested Routes</li></router-link>
+      <router-link to="/pinia-integration-a"
+        ><li>Pinia Integration</li></router-link
+      >
+      <li @click="openCommentsSubMenu">
+        Pinia Integration with Comments
+        <font-awesome-icon icon="fa-solid fa-chevron-down" class="down-arrow" />
+      </li>
+      <ol v-if="comments">
+        <router-link to="/comments/get"><li>Get Comments</li></router-link>
+      </ol>
       <router-link to="/miscellaneous"><li>Miscellaneous</li></router-link>
     </ul>
   </div>
@@ -173,6 +183,7 @@ export default {
       vueAndHttp: false,
       lifecycle: false,
       compositionAPI: false,
+      comments: false,
     };
   },
   methods: {
@@ -208,6 +219,9 @@ export default {
     },
     openCompositionAPISubMenu() {
       this.compositionAPI = !this.compositionAPI;
+    },
+    openCommentsSubMenu() {
+      this.comments = !this.comments;
     },
   },
 };

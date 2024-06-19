@@ -46,7 +46,11 @@ import HomeHeader from "../components/HomeHeader.vue";
 import NestedRoutes from "../views/NestedRoutes/UsersComponent.vue";
 import UsersProfile from "../views/NestedRoutes/UsersChild/UsersProfile.vue";
 import UsersHeader from "../components/UsersHeader.vue";
-import UsersPosts from "../views/NestedRoutes/UsersChild/UsersPosts.vue";
+// import UsersPosts from "../views/NestedRoutes/UsersChild/UsersPosts.vue";
+const UsersPosts = () =>
+  import("../views/NestedRoutes/UsersChild/UsersPosts.vue"); // Dynamic import ensuring Lazy loading
+import PiniaIntegrationA from "../views/PiniaIntegration/PiniaIntegrationA.vue";
+import GetComments from "../views/Comments/GetComments.vue";
 
 const routes = [
   {
@@ -73,6 +77,12 @@ const routes = [
   {
     path: "/html-binding",
     component: HtmlBinding,
+    // Per-route guard
+    beforeEnter: (to, from) => {
+      console.log("per route before enter");
+      console.log(to, "to");
+      console.log(from, "from");
+    },
   },
   {
     path: "/attributes-binding/id",
@@ -259,7 +269,8 @@ const routes = [
       },
     ],
   },
-
+  { path: "/comments/get", component: GetComments },
+  { path: "/pinia-integration-a", component: PiniaIntegrationA },
   { path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
